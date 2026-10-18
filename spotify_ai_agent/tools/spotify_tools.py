@@ -7,20 +7,20 @@ def getItemTypes():
     return ss.getItemTypes()
 
 def searchItem(query : str, itemType: str):
-    print(f"Calliing {query} and {itemType}")
+    print(f"Calling searchItem {query} and {itemType}")
     return ss.searchItem(query=query, queryType=itemType)
 
 def getArtistDetails(artistId : str):
     print(f"Calling getArtistDetails tool {artistId}")
     return ss.getArtist(artistId=artistId)
 
-def getArtistTopTracks(artistId : str):
-    print(f"Calling getArtistTopTracks tool for {artistId}")
-    return ss.getArtistTopTracks(artistId=artistId)
+def getArtistAlbums(artistId : str):
+    print(f"Calling getArtistAlbums tool for {artistId}")
+    return ss.getArtistAlbums(artistId=artistId)
 
-def getTrackDetails(artistId : str):
-    print(f"Calling getTrackDetails tool for {artistId}")
-    return ss.getTrackDetails(artistId)
+def getTrackDetails(trackId : str):
+    print(f"Calling getTrackDetails tool for {trackId}")
+    return ss.getTrackDetails(trackId)
 
 def getAudioFeaturesOfTrack(trackId: str):
     print(f"Calling getAudioFeaturesOfTrack tool for {trackId}")
@@ -30,7 +30,8 @@ def getAlbumDetails(albumId : str):
     print(f"Calling getAlbumDetails tool {albumId}")
     return ss.getAlbumDetails(albumId=albumId)
 
+
 def getAvailableTools():
     return [
-        getItemTypes, searchItem, getArtistDetails, getArtistTopTracks, getTrackDetails, getAudioFeaturesOfTrack, getAlbumDetails 
+        getItemTypes, searchItem, getArtistDetails, getArtistAlbums, getTrackDetails, getAlbumDetails 
     ]

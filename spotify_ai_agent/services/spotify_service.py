@@ -48,26 +48,33 @@ class SpotifyService:
             return self.client.getCall(f"tracks/{trackId}", qpParams={}, headers=self.headers)
         except Exception as e:
             return self._handleError(e)
+
         
     def getAlbumDetails(self, albumId : str):
         try:
-            return self.client.getCall(f"albums/{albumId}", qpParams={}, headers = self.headers)
+            response = self.client.getCall(f"albums/{albumId}", qpParams={}, headers = self.headers)
+            tracks = response["tracks"]["items"]
+            newTracks = []
+            for track in tracks:
+                trackObj = {}
+                trackObj["id"] = track["id"]
+                trackObj["name"] = track["name"]
+                newTracks.append(trackObj)
+            response["tracks"] = newTracks
+            return response
         except Exception as e:
             return self._handleError(e)
 
-    def getArtistTopTracks(self, artistId : str):
+    def getArtistAlbums(self, artistId : str):
         try:
-            response = self.client.getCall(f"artists/{artistId}/top-tracks", qpParams={}, headers = self.headers)
-            if "tracks" in response:
-                tracks = response["tracks"]
+            response = self.client.getCall(f"artists/{artistId}/albums", qpParams={}, headers = self.headers)
+            if "items" in response:
+                albums = response["items"]
                 results = []
-                for track in tracks:
+                for track in albums:
                     obj = {}
                     obj["id"] = track["id"]
                     obj["name"] = track["name"]
-                    if "album" in track:
-                        obj["albumName"] = track["album"]["name"]
-                        obj["albumId"] = track["album"]["id"]
                     results.append(track)
                 return results 
         except Exception as e:
