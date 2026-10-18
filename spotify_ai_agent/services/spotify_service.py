@@ -87,7 +87,7 @@ class SpotifyService:
                 "Authorization": f"Basic {authHeader}"
             }
             response = authClient.postCallFormEncoded("api/token", data = data, headers=headers)
-            print("Response", response, "Auth succeeded")
+            print("Auth succeeded")
             return response["access_token"]
         except Exception as e:
             return self._handleError(e)
