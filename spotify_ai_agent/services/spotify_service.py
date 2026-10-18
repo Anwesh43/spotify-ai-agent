@@ -1,5 +1,6 @@
 from services.base_http_client import BaseHTTPClient 
 from dotenv import load_dotenv 
+import base64
 import os 
 
 load_dotenv()
@@ -8,7 +9,7 @@ class SpotifyService:
     def __init__(self):
         self.client = BaseHTTPClient(os.environ["SPOTIFY_BASE_URL"])
         self.headers = {
-            "Authorization": f"Bearer {os.environ["SPOTIFY_API_KEY"]}"
+            "Authorization": f"Bearer {self._authorize()}"
         }
 
     def _handleError(self, e):
@@ -69,6 +70,25 @@ class SpotifyService:
                         obj["albumId"] = track["album"]["id"]
                     results.append(track)
                 return results 
+        except Exception as e:
+            return self._handleError(e)
+
+    def _authorize(self):
+        try:
+            authClient = BaseHTTPClient("https://accounts.spotify.com")
+            authString = f"{os.environ["SPOTIFY_CLIENT_ID"]}:{os.environ["SPOTIFY_CLIENT_SECRET"]}"
+            authBytes = authString.encode("utf-8")
+            authHeader = str(base64.b64encode(authBytes), "utf-8")
+            data = {
+                "grant_type": "client_credentials"
+            }
+            headers = {
+                "Content-type": "application/x-www-form-urlencoded",
+                "Authorization": f"Basic {authHeader}"
+            }
+            response = authClient.postCallFormEncoded("api/token", data = data, headers=headers)
+            print("Response", response, "Auth succeeded")
+            return response["access_token"]
         except Exception as e:
             return self._handleError(e)
 

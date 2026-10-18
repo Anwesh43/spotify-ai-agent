@@ -10,3 +10,9 @@ class BaseHTTPClient:
         response = requests.get(f"{self.baseURL}/{endpoint}?{urlencode(qpParams)}", headers = headers)
         response.raise_for_status()
         return response.json()
+
+    def postCallFormEncoded(self, endpoint : str, data : Dict = {}, headers : Dict = {}):
+        response = requests.post(f"{self.baseURL}/{endpoint}", headers=headers, data=data)
+        response.raise_for_status()
+        return response.json()
+    
