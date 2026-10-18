@@ -30,8 +30,17 @@ def getAlbumDetails(albumId : str):
     print(f"Calling getAlbumDetails tool {albumId}")
     return ss.getAlbumDetails(albumId=albumId)
 
+def writeHTML(htmlStr : str, fileName : str):
+    print(f"Calling writeHTML tool {fileName}")
+    with open(fileName, "w") as f:
+        f.write(htmlStr)
+    return {
+        "status": "success",
+        "message": f"Written html to html file please open it, don't put html in response only filename"
+    }
+
 
 def getAvailableTools():
     return [
-        getItemTypes, searchItem, getArtistDetails, getArtistAlbums, getTrackDetails, getAlbumDetails 
+        getItemTypes, searchItem, getArtistDetails, getArtistAlbums, getTrackDetails, getAlbumDetails, writeHTML 
     ]
