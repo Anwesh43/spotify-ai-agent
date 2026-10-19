@@ -117,7 +117,7 @@ class SpotifyService:
             if "episodes" in response and "items" in response["episodes"]:
                 items = response["episodes"]["items"]
                 for item in items:
-                    resultObj["epsiodes"].append({"id": item["id"]})
+                    resultObj["episodes"].append({"id": item["id"]})
             return resultObj
 
         except Exception as e:
