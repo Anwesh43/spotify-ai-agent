@@ -39,8 +39,28 @@ def writeHTML(htmlStr : str, fileName : str):
         "message": f"Written html to html file please open it, don't put html in response only filename"
     }
 
+def getShowDetails(showId : str):
+    print(f"Calling getShowDetails tool for {showId}")
+    return ss.getShowDetails(showId=showId)
+
+def getEpisodeDetails(episodeId : str):
+    print(f"Calling getEpisodeDetails tool {episodeId}")
+    return ss.getEpisodeDetails(episodeId=episodeId)
+
+def getAudioBookDetails(audioBookId : str):
+    print(f"Calling getAudioBookDetails tool {audioBookId}")
+    return ss.getAudioBookDetails(audioBookId)
+
+def getAudioBookChapterDetails(chapterId : str):
+    print(f"Calling getAudioBookChapterDetails tool {chapterId}")
+    return ss.getAudioBookChapterDetails(chapterId=chapterId)
 
 def getAvailableTools():
-    return [
+    tools = [
         getItemTypes, searchItem, getArtistDetails, getArtistAlbums, getTrackDetails, getAlbumDetails, writeHTML 
     ]
+    tools.append(getShowDetails)
+    tools.append(getEpisodeDetails)
+    tools.append(getAudioBookDetails)
+    tools.append(getAudioBookChapterDetails)
+    return tools 
