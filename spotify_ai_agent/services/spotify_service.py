@@ -105,6 +105,42 @@ class SpotifyService:
             return response
         except Exception as e:
             return self._handleError(e)
-    
 
-    
+    def getShowDetails(self, showId : str):
+        try:
+            response = self.client.getCall(f"shows/{showId}", qpParams={}, headers=self.headers)
+            resultObj = {}
+            resultObj["description"] = response["description"]
+            if "name" in response:
+                resultObj["name"] = response["name"]
+            resultObj["episodes"] = []
+            if "episodes" in response and "items" in response["episodes"]:
+                items = response["episodes"]["items"]
+                for item in items:
+                    resultObj["epsiodes"].append({"id": item["id"]})
+            return resultObj
+
+        except Exception as e:
+            return self._handleError(e)
+
+    def getEpisodeDetails(self, episodeId : str):
+        try:
+            response = self.client.getCall(f"episodes/{episodeId}", qpParams={}, headers=self.headers)
+            return response 
+        except Exception as e:
+            return self._handleError(e)
+
+
+    def getAudioBookDetails(self, audioBookId : str):
+        try:
+            response = self.client.getCall(f"audiobooks/{audioBookId}", qpParams={}, headers=self.headers)
+            return response 
+        except Exception as e:
+            return self._handleError(e)
+
+    def getAudioBookChapterDetails(self, chapterId : str):
+        try:
+            response = self.client.getCall(f"chapters/{chapterId}", qpParams={}, headers=self.headers)
+            return response 
+        except Exception as e:
+            return self._handleError(e)
